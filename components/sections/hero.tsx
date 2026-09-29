@@ -33,7 +33,7 @@ export default function Hero() {
         <div className="relative inline-block">
           <div className="hidden lg:block absolute -right-40 top-1.5 w-36 -translate-y-1/2 pointer-events-none">
             <Image
-              src="/images/Arrow.svg"
+              src="/images/arrow.svg"
               alt="arrow"
               width={144}
               height={50}
