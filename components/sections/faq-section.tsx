@@ -27,7 +27,7 @@ export default function FaqSection({
   className = "",
 }: FaqSectionProps) {
   return (
-    <Container size="wide">
+    <Container size="xl">
       <section
         aria-labelledby="faq-title"
         className={`relative my-12 overflow-hidden py-6 ${className}`}

@@ -10,7 +10,6 @@ const nextConfig: NextConfig = {
     ],
   },
 
-  // اضافه کردن هدرهای امنیتی (بدون CSP که سایت را به هم نریزد)
   async headers() {
     return [
       {

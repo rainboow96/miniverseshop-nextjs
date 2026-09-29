@@ -14,7 +14,8 @@ export const metadata: Metadata = {
   description: "لیست کامل محصولات فروشگاه مینی‌ورس با امکان فیلتر و جستجوی پیشرفته",
 };
 
-const DEFAULT_LIMIT = 9; // تعداد محصولات در هر بار نمایش (۳ ردیف ۳تایی)
+ // تعدادمحصولات درهربا نمایش. 3 ردیف3تایی
+const DEFAULT_LIMIT = 9;
 
 interface PageProps {
   searchParams: Promise<{
