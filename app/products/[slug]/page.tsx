@@ -13,13 +13,17 @@ import SimilarProducts from "@/components/sections/similarProducts";
 export const revalidate = 3600;
 
 export async function generateStaticParams() {
-  const products = await prisma.product.findMany({
-    select: { slug: true },
-  });
+  try {
+    const products = await prisma.product.findMany({
+      select: { slug: true },
+    });
 
-  return products.map((product) => ({
-    slug: product.slug,
-  }));
+    return products.map((product) => ({
+      slug: product.slug,
+    }));
+  } catch {
+    return [];
+  }
 }
 
 export async function generateMetadata({
@@ -28,8 +32,10 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
+  const decodedSlug = decodeURIComponent(slug);
+
   const product = await prisma.product.findUnique({
-    where: { slug },
+    where: { slug: decodedSlug },
     select: { title: true, description: true },
   });
 
@@ -47,12 +53,18 @@ export default async function ProductPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  const decodedSlug = decodeURIComponent(slug);
 
-  const session = await auth();
-  const isLoggedIn = !!session?.user;
+  let isLoggedIn = false;
+  try {
+    const session = await auth();
+    isLoggedIn = !!session?.user;
+  } catch {
+    isLoggedIn = false;
+  }
 
   const product = await prisma.product.findUnique({
-    where: { slug },
+    where: { slug: decodedSlug },
     include: {
       category: true,
       images: { orderBy: { sortOrder: "asc" } },
@@ -82,53 +94,56 @@ export default async function ProductPage({
     { label: "محصولات", href: "/products" },
     ...(product.category
       ? [
-        {
-          label: product.category.title,
-          href: `/products?category=${product.category.slug}`,
-        },
-      ]
+          {
+            label: product.category.title,
+            href: `/products?category=${product.category.slug}`,
+          },
+        ]
       : []),
     { label: product.title, href: `/products/${product.slug}` },
   ];
 
   const productImages: string[] =
-    product.images.length > 0
+    product.images && product.images.length > 0
       ? product.images.map((img) => img.url)
       : ["/images/1.webp"];
 
   const mainImage = productImages[0];
 
   const specsForUI = [
-    ...product.specs.map((spec) => ({
+    ...(product.specs ?? []).map((spec) => ({
       label: spec.label,
       value: spec.value,
     })),
-    ...(product.color
-      ? [{ label: "رنگ پایه", value: product.color }]
-      : []),
+    ...(product.color ? [{ label: "رنگ پایه", value: product.color }] : []),
   ];
 
   const featureList =
-    product.features.length > 0
+    product.features && product.features.length > 0
       ? product.features.map((f) => f.item)
-      : product.specs.slice(0, 4).map((s) => `${s.label}: ${s.value}`);
+      : (product.specs ?? []).slice(0, 4).map((s) => `${s.label}: ${s.value}`);
 
   const variantsList =
-    product.variants.length > 0
+    product.variants && product.variants.length > 0
       ? product.variants.map((v) => ({
-        id: v.variantId,
-        colorName: v.colorName,
-        colorHex: v.colorHex,
-      }))
+          id: String(v.variantId),
+          colorName: v.colorName,
+          colorHex: v.colorHex,
+        }))
       : product.color && product.colorHex
         ? [
-          {
-            id: `single-${product.id}`,
-            colorName: product.color,
-            colorHex: product.colorHex,
-          },
-        ]
+            {
+              id: `single-${product.id}`,
+              colorName: product.color,
+              colorHex: product.colorHex,
+            },
+          ]
         : [];
+
+  const serializedReviews = (product.reviews ?? []).map((review) => ({
+    ...review,
+    createdAt: review.createdAt ? review.createdAt.toISOString() : null,
+  }));
 
   return (
     <Container>
@@ -141,18 +156,15 @@ export default async function ProductPage({
         />
 
         <div className="relative z-10 grid grid-cols-1 items-start gap-6 px-4 pt-6 lg:grid-cols-2 lg:gap-8">
-          <ProductGallery
-            images={productImages}
-            productTitle={product.title}
-          />
+          <ProductGallery images={productImages} productTitle={product.title} />
 
           <ProductInfoPanel
             productId={String(product.id)}
             title={product.title}
             alternativeName={product.alternativeName ?? undefined}
-            price={product.price}
+            price={Number(product.price)}
             image={mainImage}
-            featuresTitle={product.features[0]?.title ?? "ویژگی محصول:"}
+            featuresTitle={product.features?.[0]?.title ?? "ویژگی محصول:"}
             featuresItems={featureList}
             variants={variantsList}
           />
@@ -164,8 +176,8 @@ export default async function ProductPage({
             <ProductDetailsTabs
               specs={specsForUI}
               description={product.description ?? ""}
-              reviews={product.reviews}
-              productId={product.id}
+              reviews={serializedReviews as any}
+              productId={Number(product.id)}
               slug={product.slug}
               isLoggedIn={isLoggedIn}
             />
@@ -177,7 +189,6 @@ export default async function ProductPage({
         productType={product.productType}
         categorySlug={product.category?.slug}
       />
-
     </Container>
   );
 }
