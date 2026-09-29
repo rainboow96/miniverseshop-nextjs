@@ -1,0 +1,566 @@
+[
+  {
+    "title": "مینی کتابخونه",
+    "alternativeName": "Mini Bookshelf",
+    "slug": "archs-empty",
+    "price": 1600000,
+    "productType": "bookshelf-empty",
+    "categorySlug": "bookcase",
+    "categoryTitle": "مینی کتابخونه",
+    "color": null,
+    "colorHex": null,
+    "images": [
+      "/images/products/archs-empty/1.webp",
+      "/images/products/archs-empty/2.webp"
+    ],
+    "featureTitle": "ویژگی محصول:",
+    "features": [
+      "دست‌ساز با ظرافت بالا و جزئیات دقیق",
+      "قابلیت باز و بسته شدن کشوها"
+    ],
+    "specs": [
+      { "label": "جنس", "value": "چوب بالسا" },
+      { "label": "ابعاد", "value": "ارتفاع 14 × عرض 8 × عمق 2.5 سانتی‌متر" }
+    ],
+    "tags": ["کتابخونه", "خالی"],
+    "variants": [
+      { "variantId": "variant-archs-green", "colorName": "سبز پاستلی", "colorHex": "#bbc9a4", "stock": 0 },
+      { "variantId": "variant-archs-blue",  "colorName": "آبی پاستلی", "colorHex": "#6c92ab", "stock": 0 }
+    ]
+  },
+  {
+    "title": "کتابخونه مدل آریا",
+    "alternativeName": "Arya Bookshelf",
+    "slug": "aria",
+    "price": 2199000,
+    "productType": "bookshelf-full",
+    "categorySlug": "full-bookcase",
+    "categoryTitle": "مینی کتابخونه کامل",
+    "color": "سبز پاستلی",
+    "colorHex": "#bbc9a4",
+    "images": [
+      "/images/products/aria/1.webp",
+      "/images/products/aria/2.webp",
+      "/images/products/aria/3.webp",
+      "/images/products/aria/4.webp",
+      "/images/products/aria/5.webp"
+    ],
+    "featureTitle": "ویژگی محصول:",
+    "features": [
+      "به همراه 50 جلد مینی کتاب",
+      "دست‌ساز با ظرافت بالا و جزئیات دقیق",
+      "قابلیت باز و بسته شدن کشوها"
+    ],
+    "specs": [
+      { "label": "جنس", "value": "چوب بالسا" },
+      { "label": "ابعاد", "value": "ارتفاع 14 × عرض 8 × عمق 2.5 سانتی‌متر" }
+    ],
+    "tags": ["کتابخونه", "کامل", "کتاب دارد"],
+    "variants": []
+  },
+  {
+    "title": "کتابخونه مدل کاسپین",
+    "alternativeName": "Caspian bookshelf",
+    "slug": "caspian",
+    "price": 2199000,
+    "productType": "bookshelf-full",
+    "categorySlug": "full-bookcase",
+    "categoryTitle": "مینی کتابخونه کامل",
+    "color": "آبی پاستلی",
+    "colorHex": "#6c92ab",
+    "images": [
+      "/images/products/caspian/1.webp",
+      "/images/products/caspian/2.webp",
+      "/images/products/caspian/3.webp",
+      "/images/products/caspian/4.webp"
+    ],
+    "featureTitle": "ویژگی محصول:",
+    "features": [
+      "به همراه 50 جلد مینی کتاب",
+      "دست‌ساز با ظرافت بالا و جزئیات دقیق",
+      "قابلیت باز و بسته شدن کشوها"
+    ],
+    "specs": [
+      { "label": "جنس", "value": "چوب بالسا" },
+      { "label": "ابعاد", "value": "ارتفاع 14 × عرض 8 × عمق 2.5 سانتی‌متر" }
+    ],
+    "tags": ["کتابخونه", "کامل", "کتاب دارد"],
+    "variants": []
+  },
+  {
+    "title": "کتابخونه مدل دیبا",
+    "alternativeName": "Diba Bookshelf",
+    "slug": "diba",
+    "price": 2199000,
+    "productType": "bookshelf-full",
+    "categorySlug": "full-bookcase",
+    "categoryTitle": "مینی کتابخونه کامل",
+    "color": "رنگ چوب",
+    "colorHex": "#e1a855",
+    "images": [
+      "/images/products/diba/1.webp",
+      "/images/products/diba/2.webp",
+      "/images/products/diba/3.webp",
+      "/images/products/diba/4.webp",
+      "/images/products/diba/5.webp",
+      "/images/products/diba/6.webp",
+      "/images/products/diba/7.webp",
+      "/images/products/diba/8.webp"
+    ],
+    "featureTitle": "ویژگی محصول:",
+    "features": [
+      "به همراه 50 جلد مینی کتاب",
+      "دست‌ساز با ظرافت بالا و جزئیات دقیق",
+      "قابلیت باز و بسته شدن کشوها و درها"
+    ],
+    "specs": [
+      { "label": "جنس", "value": "چوب بالسا" },
+      { "label": "ابعاد", "value": "ارتفاع 14 × عرض 9.5 × عمق 2.5 سانتی‌متر" }
+    ],
+    "tags": ["کتابخونه", "کامل", "کتاب دارد"],
+    "variants": []
+  },
+  {
+    "title": "مینی کتابخونه تنها",
+    "alternativeName": "Empty Mini Bookshelf",
+    "slug": "empty-bookshelf",
+    "price": 1600000,
+    "productType": "bookshelf-empty",
+    "categorySlug": "bookcase",
+    "categoryTitle": "مینی کتابخونه",
+    "color": null,
+    "colorHex": null,
+    "images": [
+      "/images/products/empty-bookshelf/1.webp",
+      "/images/products/empty-bookshelf/2.webp",
+      "/images/products/empty-bookshelf/3.webp",
+      "/images/products/empty-bookshelf/4.webp"
+    ],
+    "featureTitle": "ویژگی محصول:",
+    "features": [
+      "دست‌ساز با ظرافت بالا و جزئیات دقیق",
+      "قابلیت باز و بسته شدن کشوها و درها"
+    ],
+    "specs": [
+      { "label": "جنس", "value": "چوب بالسا" },
+      { "label": "ابعاد", "value": "ارتفاع 13 × عرض 8 × عمق 3 سانتی‌متر" }
+    ],
+    "tags": ["کتابخونه", "خالی"],
+    "variants": [
+      { "variantId": "variant-empty-green",    "colorName": "سبز پاستلی",  "colorHex": "#bbc9a4", "stock": 0 },
+      { "variantId": "variant-empty-deepnavy", "colorName": "سورمه ای سیر", "colorHex": "#41475e", "stock": 0 },
+      { "variantId": "variant-empty-wood",     "colorName": "رنگ چوب",     "colorHex": "#7a6347", "stock": 0 }
+    ]
+  },
+  {
+    "title": "مینی قاب دکوری",
+    "alternativeName": "Miniature Decor Frame",
+    "slug": "frames",
+    "price": 120000,
+    "productType": "decor",
+    "categorySlug": "decor",
+    "categoryTitle": "مینی دکوری ها",
+    "color": "رنگ چوب",
+    "colorHex": "#7a6347",
+    "images": [
+      "/images/products/frames/1.webp",
+      "/images/products/frames/2.webp",
+      "/images/products/frames/3.webp",
+      "/images/products/frames/4.webp"
+    ],
+    "featureTitle": "ویژگی محصول:",
+    "features": [
+      "دست‌ساز با ظرافت بالا و جزئیات دقیق"
+    ],
+    "specs": [
+      { "label": "جنس", "value": "چوب بالسا" },
+      { "label": "ابعاد", "value": "ارتفاع 3 × عرض 1.5 سانتی‌متر" }
+    ],
+    "tags": ["تزیینی", "دکور"],
+    "variants": []
+  },
+  {
+    "title": "کتابخونه گندم",
+    "alternativeName": "Gandom Bookshelf",
+    "slug": "gandom-bookshelf",
+    "price": 1990000,
+    "productType": "bookshelf-full",
+    "categorySlug": "full-bookcase",
+    "categoryTitle": "مینی کتابخونه کامل",
+    "color": "رنگ چوب روشن",
+    "colorHex": "#ebd3a3",
+    "images": [
+      "/images/products/gandom-bookshelf/1.webp",
+      "/images/products/gandom-bookshelf/2.webp",
+      "/images/products/gandom-bookshelf/3.webp",
+      "/images/products/gandom-bookshelf/4.webp",
+      "/images/products/gandom-bookshelf/5.webp"
+    ],
+    "featureTitle": "ویژگی محصول:",
+    "features": [
+      "به همراه 50 جلد مینی کتاب",
+      "دست‌ساز با ظرافت بالا و جزئیات دقیق"
+    ],
+    "specs": [
+      { "label": "جنس", "value": "چوب بالسا" },
+      { "label": "ابعاد", "value": "ارتفاع 15 × عرض 10 × عمق 2.5 سانتی‌متر" }
+    ],
+    "tags": ["کتابخونه", "کامل", "کتاب دارد"],
+    "variants": []
+  },
+  {
+    "title": "کتابخونه گردو",
+    "alternativeName": "Gerdoo Bookshelf",
+    "slug": "gerdoo",
+    "price": 2199000,
+    "productType": "bookshelf-full",
+    "categorySlug": "full-bookcase",
+    "categoryTitle": "مینی کتابخونه کامل",
+    "color": "رنگ چوب",
+    "colorHex": "#a08252",
+    "images": [
+      "/images/products/gerdoo/1.webp",
+      "/images/products/gerdoo/2.webp",
+      "/images/products/gerdoo/3.webp",
+      "/images/products/gerdoo/4.webp",
+      "/images/products/gerdoo/5.webp",
+      "/images/products/gerdoo/6.webp"
+    ],
+    "featureTitle": "ویژگی محصول:",
+    "features": [
+      "به همراه 50 جلد مینی کتاب",
+      "دست‌ساز با ظرافت بالا و جزئیات دقیق",
+      "قابلیت باز و بسته شدن کشوها"
+    ],
+    "specs": [
+      { "label": "جنس", "value": "چوب بالسا" },
+      { "label": "ابعاد", "value": "ارتفاع 16 × عرض 8 × عمق 2 سانتی‌متر" }
+    ],
+    "tags": ["کتابخونه", "کامل", "کتاب دارد"],
+    "variants": []
+  },
+  {
+    "title": "مینی کتابخونه تنها",
+    "alternativeName": "empty-bookshelf",
+    "slug": "honari-empty",
+    "price": 900000,
+    "productType": "bookshelf-empty",
+    "categorySlug": "bookcase",
+    "categoryTitle": "مینی کتابخونه",
+    "color": null,
+    "colorHex": null,
+    "images": [
+      "/images/products/honari-empty/1.webp"
+    ],
+    "featureTitle": "ویژگی محصول:",
+    "features": [
+      "دست‌ساز با ظرافت بالا و جزئیات دقیق"
+    ],
+    "specs": [
+      { "label": "جنس", "value": "چوب بالسا" },
+      { "label": "ابعاد", "value": "ارتفاع 15 × عرض 5 × عمق 2.5 سانتی‌متر" }
+    ],
+    "tags": ["کتابخونه", "خالی"],
+    "variants": [
+      { "variantId": "variant-honari-blue",     "colorName": "آبی پاستلی",   "colorHex": "#6c92ab", "stock": 0 },
+      { "variantId": "variant-honari-green",    "colorName": "سبز پاستلی",   "colorHex": "#95b582", "stock": 0 },
+      { "variantId": "variant-honari-burgundy", "colorName": "جگری",         "colorHex": "#6d362a", "stock": 0 },
+      { "variantId": "variant-honari-ivory",    "colorName": "سفید عاجی",    "colorHex": "#eeefe8", "stock": 0 },
+      { "variantId": "variant-honari-lemon",    "colorName": "رنگ لیمویی",   "colorHex": "#e2c97a", "stock": 0 }
+    ]
+  },
+  {
+    "title": "کتابخونه خاتون",
+    "alternativeName": "Khatoon Bookshelf",
+    "slug": "khatoon",
+    "price": 2299000,
+    "productType": "bookshelf-full",
+    "categorySlug": "full-bookcase",
+    "categoryTitle": "مینی کتابخونه کامل",
+    "color": "سورمه ای سیر",
+    "colorHex": "#41475e",
+    "images": [
+      "/images/products/khatoon/1.webp"
+    ],
+    "featureTitle": "ویژگی محصول:",
+    "features": [
+      "به همراه 50 جلد مینی کتاب",
+      "دست‌ساز با ظرافت بالا و جزئیات دقیق",
+      "قابلیت باز و بسته شدن کشوها و درها"
+    ],
+    "specs": [
+      { "label": "جنس", "value": "چوب بالسا" },
+      { "label": "ابعاد", "value": "ارتفاع 13 × عرض 8 × عمق 3 سانتی‌متر" }
+    ],
+    "tags": ["کتابخونه", "کامل", "کتاب دارد"],
+    "variants": []
+  },
+  {
+    "title": "کتابخونه ماهور",
+    "alternativeName": "Mahoor Bookshelf",
+    "slug": "mahoor",
+    "price": 1590000,
+    "productType": "bookshelf-full",
+    "categorySlug": "full-bookcase",
+    "categoryTitle": "مینی کتابخونه کامل",
+    "color": "سفید",
+    "colorHex": "#fafbff",
+    "images": [
+      "/images/products/mahoor/1.webp",
+      "/images/products/mahoor/2.webp",
+      "/images/products/mahoor/3.webp",
+      "/images/products/mahoor/4.webp",
+      "/images/products/mahoor/5.webp"
+    ],
+    "featureTitle": "ویژگی محصول:",
+    "features": [
+      "به همراه 50 جلد مینی کتاب",
+      "دست‌ساز با ظرافت بالا و جزئیات دقیق"
+    ],
+    "specs": [
+      { "label": "جنس", "value": "چوب بالسا" },
+      { "label": "ابعاد", "value": "ارتفاع 12 × عرض 8.5 × عمق 2.5 سانتی‌متر" }
+    ],
+    "tags": ["کتابخونه", "کامل", "کتاب دارد"],
+    "variants": []
+  },
+  {
+    "title": "کتابخونه مهتاب",
+    "alternativeName": "Mahtab Bookshelf",
+    "slug": "mahtab",
+    "price": 1590000,
+    "productType": "bookshelf-full",
+    "categorySlug": "full-bookcase",
+    "categoryTitle": "مینی کتابخونه کامل",
+    "color": "سورمه ای سیر",
+    "colorHex": "#41475e",
+    "images": [
+      "/images/products/mahtab/1.webp",
+      "/images/products/mahtab/2.webp",
+      "/images/products/mahtab/3.webp",
+      "/images/products/mahtab/4.webp",
+      "/images/products/mahtab/5.webp"
+    ],
+    "featureTitle": "ویژگی محصول:",
+    "features": [
+      "به همراه 50 جلد مینی کتاب",
+      "دست‌ساز با ظرافت بالا و جزئیات دقیق"
+    ],
+    "specs": [
+      { "label": "جنس", "value": "چوب بالسا" },
+      { "label": "ابعاد", "value": "ارتفاع 12 × عرض 9 × عمق 2.5 سانتی‌متر" }
+    ],
+    "tags": ["کتابخونه", "کامل", "کتاب دارد"],
+    "variants": []
+  },
+  {
+    "title": "کتابخونه نارون",
+    "alternativeName": "Narvan Bookshelf",
+    "slug": "narvan",
+    "price": 1349000,
+    "productType": "bookshelf-full",
+    "categorySlug": "full-bookcase",
+    "categoryTitle": "مینی کتابخونه کامل",
+    "color": "سبز پاستلی",
+    "colorHex": "#95b582",
+    "images": [
+      "/images/products/narvan/1.webp",
+      "/images/products/narvan/2.webp"
+    ],
+    "featureTitle": "ویژگی محصول:",
+    "features": [
+      "به همراه 50 جلد مینی کتاب",
+      "دست‌ساز با ظرافت بالا و جزئیات دقیق"
+    ],
+    "specs": [
+      { "label": "جنس", "value": "چوب بالسا" },
+      { "label": "ابعاد", "value": "ارتفاع 15 × عرض 5 × عمق 2.5 سانتی‌متر" }
+    ],
+    "tags": ["کتابخونه", "کامل", "کتاب دارد"],
+    "variants": []
+  },
+  {
+    "title": "کتابخونه نیلگون",
+    "alternativeName": "Nilgoon Bookshelf",
+    "slug": "nilgoon",
+    "price": 1349000,
+    "productType": "bookshelf-full",
+    "categorySlug": "full-bookcase",
+    "categoryTitle": "مینی کتابخونه کامل",
+    "color": "آبی پاستلی",
+    "colorHex": "#6c92ab",
+    "images": [
+      "/images/products/nilgoon/1.webp",
+      "/images/products/nilgoon/2.webp"
+    ],
+    "featureTitle": "ویژگی محصول:",
+    "features": [
+      "به همراه 50 جلد مینی کتاب",
+      "دست‌ساز با ظرافت بالا و جزئیات دقیق"
+    ],
+    "specs": [
+      { "label": "جنس", "value": "چوب بالسا" },
+      { "label": "ابعاد", "value": "ارتفاع 15 × عرض 5 × عمق 2.5 سانتی‌متر" }
+    ],
+    "tags": ["کتابخونه", "کامل", "کتاب دارد"],
+    "variants": []
+  },
+  {
+    "title": "کتابخونه نیلوفر",
+    "alternativeName": "Niloufar Bookshelf",
+    "slug": "nillufar",
+    "price": 1349000,
+    "productType": "bookshelf-full",
+    "categorySlug": "full-bookcase",
+    "categoryTitle": "مینی کتابخونه کامل",
+    "color": "جگری",
+    "colorHex": "#6d362a",
+    "images": [
+      "/images/products/nillufar/1.webp",
+      "/images/products/nillufar/2.webp"
+    ],
+    "featureTitle": "ویژگی محصول:",
+    "features": [
+      "به همراه 50 جلد مینی کتاب",
+      "دست‌ساز با ظرافت بالا و جزئیات دقیق"
+    ],
+    "specs": [
+      { "label": "جنس", "value": "چوب بالسا" },
+      { "label": "ابعاد", "value": "ارتفاع 15 × عرض 5 × عمق 2.5 سانتی‌متر" }
+    ],
+    "tags": ["کتابخونه", "کامل", "کتاب دارد"],
+    "variants": []
+  },
+  {
+    "title": "گلدون مینیاتوری",
+    "alternativeName": "Mini Potted Plant",
+    "slug": "pot",
+    "price": 250000,
+    "productType": "decor",
+    "categorySlug": "decor",
+    "categoryTitle": "مینی دکوری ها",
+    "color": "قهوه ای",
+    "colorHex": "#441c15",
+    "images": [
+      "/images/products/pot/1.webp"
+    ],
+    "featureTitle": "ویژگی محصول:",
+    "features": [
+      "دست‌ساز با ظرافت بالا و جزئیات دقیق"
+    ],
+    "specs": [
+      { "label": "جنس", "value": "چوب بالسا" },
+      { "label": "ابعاد", "value": "ارتفاع 2.5 × عرض 2" }
+    ],
+    "tags": ["تزیینی", "دکور"],
+    "variants": []
+  },
+  {
+    "title": "کتابخونه شهرزاد",
+    "alternativeName": "Shahrazad Bookshelf",
+    "slug": "shahrzad",
+    "price": 2299000,
+    "productType": "bookshelf-full",
+    "categorySlug": "full-bookcase",
+    "categoryTitle": "مینی کتابخونه کامل",
+    "color": "سبز پاستلی",
+    "colorHex": "#cae1ce",
+    "images": [
+      "/images/products/shahrzad/1.webp",
+      "/images/products/shahrzad/2.webp"
+    ],
+    "featureTitle": "ویژگی محصول:",
+    "features": [
+      "به همراه 50 جلد مینی کتاب",
+      "دست‌ساز با ظرافت بالا و جزئیات دقیق",
+      "قابلیت باز و بسته شدن کشوها و درها"
+    ],
+    "specs": [
+      { "label": "جنس", "value": "چوب بالسا" },
+      { "label": "ابعاد", "value": "ارتفاع 13 × عرض 8 × عمق 3 سانتی‌متر" }
+    ],
+    "tags": ["کتابخونه", "کامل", "کتاب دارد"],
+    "variants": []
+  },
+  {
+    "title": "کتابخونه ستاره",
+    "alternativeName": "Setareh Bookshelf",
+    "slug": "star-bookshelf",
+    "price": 2199000,
+    "productType": "bookshelf-full",
+    "categorySlug": "full-bookcase",
+    "categoryTitle": "مینی کتابخونه کامل",
+    "color": "رنگ چوب",
+    "colorHex": "#725d41",
+    "images": [
+      "/images/products/star-bookshelf/1.webp",
+      "/images/products/star-bookshelf/2.webp",
+      "/images/products/star-bookshelf/3.webp",
+      "/images/products/star-bookshelf/4.webp"
+    ],
+    "featureTitle": "ویژگی محصول:",
+    "features": [
+      "به همراه 50 جلد مینی کتاب",
+      "دست‌ساز با ظرافت بالا و جزئیات دقیق",
+      "قابلیت باز و بسته شدن کشوها"
+    ],
+    "specs": [
+      { "label": "جنس", "value": "چوب بالسا" },
+      { "label": "ابعاد", "value": "ارتفاع 15.5 × عرض 8 × عمق 2.5 سانتی‌متر" }
+    ],
+    "tags": ["کتابخونه", "کامل", "کتاب دارد"],
+    "variants": []
+  },
+  {
+    "title": "کتابخونه ترنج",
+    "alternativeName": "Toranj Bookshelf",
+    "slug": "torang",
+    "price": 1349000,
+    "productType": "bookshelf-full",
+    "categorySlug": "full-bookcase",
+    "categoryTitle": "مینی کتابخونه کامل",
+    "color": "لیمویی",
+    "colorHex": "#e2c97a",
+    "images": [
+      "/images/products/torang/1.webp",
+      "/images/products/torang/2.webp"
+    ],
+    "featureTitle": "ویژگی محصول:",
+    "features": [
+      "به همراه 50 جلد مینی کتاب",
+      "دست‌ساز با ظرافت بالا و جزئیات دقیق"
+    ],
+    "specs": [
+      { "label": "جنس", "value": "چوب بالسا" },
+      { "label": "ابعاد", "value": "ارتفاع 15 × عرض 5 × عمق 2.5 سانتی‌متر" }
+    ],
+    "tags": ["کتابخونه", "کامل", "کتاب دارد"],
+    "variants": []
+  },
+  {
+    "title": "کتابخونه وانیل",
+    "alternativeName": "Vanilla Bookshelf",
+    "slug": "vanill",
+    "price": 1349000,
+    "productType": "bookshelf-full",
+    "categorySlug": "full-bookcase",
+    "categoryTitle": "مینی کتابخونه کامل",
+    "color": "سفید عاجی",
+    "colorHex": "#eeefe8",
+    "images": [
+      "/images/products/vanill/1.webp",
+      "/images/products/vanill/2.webp"
+    ],
+    "featureTitle": "ویژگی محصول:",
+    "features": [
+      "به همراه 50 جلد مینی کتاب",
+      "دست‌ساز با ظرافت بالا و جزئیات دقیق"
+    ],
+    "specs": [
+      { "label": "جنس", "value": "چوب بالسا" },
+      { "label": "ابعاد", "value": "ارتفاع 15 × عرض 5 × عمق 2.5 سانتی‌متر" }
+    ],
+    "tags": ["کتابخونه", "کامل", "کتاب دارد"],
+    "variants": []
+  }
+]

@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🪐 MiniVerse — Full-Stack E-Commerce Platform
 
-## Getting Started
+A modern, high-performance, and type-safe e-commerce web application built with **Next.js 15 (App Router)**, **TypeScript**, **Tailwind CSS**, and **Prisma ORM**.
 
-First, run the development server:
+Designed with a clean component-driven architecture, end-to-end type safety, robust session-based authentication, and seamless state management.
 
+---
+
+## ✨ Features
+
+- **⚡ Modern App Router Architecture:** Leverages Server & Client Components for optimal performance and SEO.
+- **🔐 Robust Authentication (NextAuth.js v5):**
+  - Google OAuth integration.
+  - Database-backed session persistence via `@auth/prisma-adapter`.
+  - Automatic session expiration and lifecycle handling (30-day default).
+- **🛒 Dynamic State Management:** Global cart and client state powered by **Zustand** (lightweight, zero prop-drilling).
+- **🗄️ Relational Database & ORM:**
+  - Structured schema with **PostgreSQL** & **Prisma ORM**.
+  - Relational modeling for Products, Categories, Product Variants, Features, Specs, and User Reviews.
+- **🎨 Modern UI & Animations:**
+  - Styled with **Tailwind CSS** & **shadcn/ui** primitives.
+  - Smooth interactive elements and micro-interactions powered by **Framer Motion** and **Lucide Icons**.
+- **🛡️ 100% Type-Safe:** Fully typed TypeScript implementation without loose `any` types.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Framework:** [Next.js](https://nextjs.org/) (App Router, React 19 / Server Components)
+- **Language:** [TypeScript](https://www.typescriptlang.org/)
+- **Database & ORM:** [PostgreSQL](https://www.postgresql.org/) & [Prisma ORM](https://www.prisma.io/)
+- **Authentication:** [NextAuth.js v5 (Auth.js)](https://authjs.dev/) with Prisma Adapter
+- **Global State:** [Zustand](https://github.com/pmndrs/zustand)
+- **Styling & UI:** [Tailwind CSS](https://tailwindcss.com/), [shadcn/ui](https://ui.shadcn.com/), [Framer Motion](https://www.framer.com/motion/)
+- **Icons:** [Lucide React](https://lucide.dev/)
+
+---
+
+## 🏗️ Architecture & Database Highlights
+
+The project utilizes a co-location design pattern to keep component-specific logic modular while abstracting cross-cutting domain concerns (database operations, authentication, and global state).
+
+### Data Models Overview:
+- `User` & `Account` & `Session`: Secure session & OAuth credential tracking.
+- `Category` & `Product`: Flexible catalog with nested relations (`ProductImage`, `ProductFeature`, `ProductSpec`, `ProductVariant`).
+- `Review`: Verified user feedback per product with database-level cascading integrity.
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+git clone https://github.com/rainboow96/miniverse.git
+cd miniverse

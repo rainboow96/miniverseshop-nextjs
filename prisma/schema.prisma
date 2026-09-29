@@ -1,0 +1,180 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============ Auth Models ============
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  reviews       Review[] 
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+}
+
+//انقضای نشست
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
+}
+
+// ============ Shop Models ============
+model Category {
+  id        Int       @id @default(autoincrement())
+  title     String
+  slug      String    @unique
+  sortOrder Int       @default(0)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  products  Product[]
+
+  @@index([slug])
+}
+
+model Product {
+  id              Int              @id @default(autoincrement())
+  title           String
+  alternativeName String?
+  slug            String           @unique
+  price           Int
+  productType     String
+  color           String?
+  colorHex        String?
+  description     String?          @db.Text
+  isActive        Boolean          @default(true)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  categoryId      Int
+  category        Category         @relation(fields: [categoryId], references: [id])
+
+  images          ProductImage[]
+  features        ProductFeature[]
+  specs           ProductSpec[]
+  tags            ProductTag[]
+  variants        ProductVariant[]
+  reviews         Review[]
+
+  @@index([categoryId])
+  @@index([productType])
+  @@index([slug])
+}
+
+model ProductImage {
+  id        Int     @id @default(autoincrement())
+  productId Int
+  url       String
+  alt       String?
+  sortOrder Int     @default(0)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+}
+
+model ProductFeature {
+  id        Int     @id @default(autoincrement())
+  productId Int
+  title     String?
+  item      String  @db.Text
+  sortOrder Int     @default(0)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+}
+
+model ProductSpec {
+  id        Int     @id @default(autoincrement())
+  productId Int
+  label     String
+  value     String  @db.Text
+  sortOrder Int     @default(0)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+}
+
+model ProductTag {
+  id        Int     @id @default(autoincrement())
+  productId Int
+  tag       String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, tag])
+  @@index([tag])
+}
+
+model ProductVariant {
+  id        Int     @id @default(autoincrement())
+  productId Int
+  variantId String
+  colorName String
+  colorHex  String
+  stock     Int     @default(0)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, variantId])
+  @@index([productId])
+}
+
+// ============ Review Model ============
+model Review {
+  id        Int      @id @default(autoincrement())
+  rating    Int      @default(5)
+  comment   String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // ارتباط با محصول (چون Product.id از نوع Int است، اینجا هم Int می‌شود)
+  productId Int
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  // ارتباط با کاربر ثبت‌کننده (چون User.id از نوع String است، اینجا هم String می‌شود)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+  @@index([userId])
+  @@unique([productId, userId])
+}
