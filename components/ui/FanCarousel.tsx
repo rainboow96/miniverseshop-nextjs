@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useLayoutEffect, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 interface BreakpointConfig {
@@ -34,7 +34,7 @@ export interface FanCarouselProps {
 export default function FanCarousel({
   images = [],
   count = 6,
-  speed = 0.035,
+  speed = 0.025,
   className = "",
 }: FanCarouselProps) {
   const stageRef = useRef<HTMLDivElement | null>(null);
@@ -46,7 +46,7 @@ export default function FanCarousel({
   const displayItems = React.useMemo(() => {
     if (baseItems.length === 0) return [];
     let list = [...baseItems];
-    while (list.length < 8) {
+    while (list.length < 12) {
       list = [...list, ...baseItems];
     }
     return list;
@@ -57,19 +57,41 @@ export default function FanCarousel({
   const [config, setConfig] = useState<BreakpointConfig>(BREAKPOINTS[0]);
   const configRef = useRef<BreakpointConfig>(BREAKPOINTS[0]);
 
+  useLayoutEffect(() => {
+    const stage = stageRef.current;
+    const w = stage?.clientWidth || window.innerWidth || 360;
+    stageWidthRef.current = w;
+    const nextConfig = resolveConfig(w);
+    configRef.current = nextConfig;
+    setConfig(nextConfig);
+
+    const { gap, curve, maxRotate } = nextConfig;
+    const totalWidth = gap * totalItems;
+    const halfStageW = w / 2;
+
+    for (let i = 0; i < totalItems; i++) {
+      let rawPos = (i * gap) % totalWidth;
+      if (rawPos < -totalWidth / 2) rawPos += totalWidth;
+      if (rawPos > totalWidth / 2) rawPos -= totalWidth;
+
+      const normalizedDist = Math.max(-1, Math.min(1, rawPos / (halfStageW + 40)));
+      const posY = curve * (normalizedDist * normalizedDist);
+      const rotateZ = normalizedDist * maxRotate;
+      const scale = Math.max(0.7, 1 - Math.abs(normalizedDist) * 0.28);
+      const opacity = Math.max(0.25, 1 - Math.abs(normalizedDist) * 0.55);
+
+      const el = itemsRef.current[i];
+      if (el) {
+        el.style.transform = `translate3d(${rawPos}px, ${-posY}px, 0) rotate(${rotateZ}deg) scale(${scale})`;
+        el.style.opacity = `${opacity}`;
+        el.style.zIndex = `${100 - Math.round(Math.abs(rawPos))}`;
+      }
+    }
+  }, [totalItems]);
+
   useEffect(() => {
     const stage = stageRef.current;
     if (!stage) return;
-
-    const updateDimensions = () => {
-      const w = stage.clientWidth || window.innerWidth;
-      stageWidthRef.current = w;
-      const nextConfig = resolveConfig(w);
-      configRef.current = nextConfig;
-      setConfig(nextConfig);
-    };
-
-    updateDimensions();
 
     const ro = new ResizeObserver((entries) => {
       const entry = entries[0];
@@ -126,13 +148,11 @@ export default function FanCarousel({
     };
 
     const tick = (timestamp: number) => {
-      const deltaTime = Math.min(timestamp - lastTime, 64); 
-
-      const { gap } = configRef.current;
-      const effectiveSpeed = speed * (gap / 180);
+      const deltaTime = Math.min(timestamp - lastTime, 32); 
+      lastTime = timestamp;
 
       if (!isDragging && !isPaused) {
-        offset += effectiveSpeed * deltaTime;
+        offset += speed * deltaTime;
       }
 
       layout();
@@ -255,7 +275,8 @@ export default function FanCarousel({
                   alt={`کتابخانه مینیاتوری ${index + 1}`}
                   fill
                   sizes="(max-width: 480px) 120px, (max-width: 768px) 150px, 190px"
-                  priority={index < 3}
+                  priority={index < 5}
+                  loading="eager"
                   quality={75}
                   draggable={false}
                   className="object-cover"
