@@ -1,4 +1,3 @@
-// components/products/productDetailsTabs.tsx
 "use client";
 
 import { useState } from "react";
@@ -34,7 +33,6 @@ export default function ProductDetailsTabs({
 }: ProductDetailsTabsProps) {
   const [activeTab, setActiveTab] = useState<TabId>("features");
 
-  // دیتای پیش‌فرض در صورت نبود داده
   const displaySpecs = specs.length > 0 ? specs : [
     { label: "وزن", value: "۲۰۰ گرم" },
     { label: "اندازه", value: "متوسط" },
@@ -49,10 +47,10 @@ export default function ProductDetailsTabs({
   ];
 
   return (
-    <section className="py-10" id="product-details" aria-label="جزئیات محصول">
+    <section className="py-6 sm:py-10" id="product-details" aria-label="جزئیات محصول">
       <Container>
         <div 
-          className="flex flex-row justify-center gap-3 rounded-[40px] bg-[#b5be9b] px-4 pb-20 pt-8"
+          className="flex flex-row items-center justify-center gap-1.5 sm:gap-3 rounded-[28px] sm:rounded-[40px] bg-[#b5be9b] px-2 sm:px-4 pb-16 pt-5 sm:pb-20 sm:pt-8"
           role="tablist"
           aria-label="بخش‌های جزئیات محصول"
         >
@@ -65,13 +63,14 @@ export default function ProductDetailsTabs({
               role="tab"
               aria-selected={activeTab === tab.id}
               aria-controls={`panel-${tab.id}`}
+              className="px-2.5 py-1.5 text-xs sm:px-5 sm:py-2.5 sm:text-sm whitespace-nowrap min-w-0"
             >
               {tab.label}
             </Button>
           ))}
         </div>
 
-        <div className="mx-auto -mt-16 max-w-4xl rounded-[40px] border border-neutral-100 bg-white p-8 shadow-lg md:p-12">
+        <div className="mx-auto -mt-12 sm:-mt-16 max-w-4xl rounded-[28px] sm:rounded-[40px] border border-neutral-100 bg-white p-4 sm:p-8 md:p-12 shadow-md">
           <div role="tabpanel" id={`panel-${activeTab}`}>
             {activeTab === "features" && (
               <FeaturesTable specs={displaySpecs} />

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ShoppingBag, Trash2, Plus, Minus, PackageOpen } from "lucide-react";
+import { ShoppingBag, Trash2, Plus, Minus, PackageOpen, X } from "lucide-react";
 import { useCart } from "@/store/useCart";
 import { Button } from "../ui/button";
 
@@ -24,21 +24,21 @@ export default function MiniCart() {
     setIsMounted(true);
   }, []);
 
-  // مدیریت باز شدن سریع و لغو تایمر بستن
   const handleMouseEnter = () => {
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
+    if (typeof window !== "undefined" && window.innerWidth >= 768) {
+      if (timerRef.current) clearTimeout(timerRef.current);
+      setIsOpen(true);
     }
-    setIsOpen(true);
   };
 
   const handleMouseLeave = () => {
-    timerRef.current = setTimeout(() => {
-      setIsOpen(false);
-    }, 200);
+    if (typeof window !== "undefined" && window.innerWidth >= 768) {
+      timerRef.current = setTimeout(() => {
+        setIsOpen(false);
+      }, 200);
+    }
   };
 
-  // بستن پاپ‌آپ با کلیک خارج از کادر
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent | TouchEvent) => {
       if (
@@ -89,21 +89,35 @@ export default function MiniCart() {
         )}
       </button>
 
+      {isOpen && (
+        <div
+          onClick={() => setIsOpen(false)}
+          className="fixed inset-x-0 bottom-0 top-16 z-40 bg-black/25 backdrop-blur-[2px] transition-opacity md:hidden"
+        />
+      )}
+
       <div
-        className={`absolute left-0 top-full z-50 pt-2 transition-all duration-200 ${
+        className={`fixed inset-x-3.5 top-[68px] z-50 transition-all duration-300 md:absolute md:inset-auto md:left-0 md:top-full md:pt-2 ${
           isOpen
             ? "pointer-events-auto visible translate-y-0 opacity-100"
             : "pointer-events-none invisible translate-y-2 opacity-0"
         }`}
       >
-        <div className="w-[340px] sm:w-[370px] rounded-[24px] border border-stone-100 bg-white p-5 shadow-2xl">
-          <div className="flex items-center justify-between pb-3 border-b border-stone-800">
-            <h3 className="text-sm font-bold text-stone-800">
-              سبد خرید شما
-            </h3>
-            <span className="text-xs font-medium text-stone-400">
-              {formatNumber(count)} کالا
-            </span>
+        <div className="mx-auto w-full max-w-[380px] rounded-[24px] border border-stone-100 bg-white p-4.5 shadow-[0_20px_45px_rgba(0,0,0,0.14)] sm:p-5 md:w-[360px]">
+          <div className="flex items-center justify-between border-b border-stone-100 pb-3">
+            <div className="flex items-center gap-2">
+              <h3 className="text-sm font-bold text-stone-800">سبد خرید شما</h3>
+              <span className="rounded-full bg-stone-100 px-2 py-0.5 text-[11px] font-semibold text-stone-600">
+                {formatNumber(count)} کالا
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setIsOpen(false)}
+              className="flex h-7 w-7 items-center justify-center rounded-full text-stone-400 hover:bg-stone-100 hover:text-stone-700"
+            >
+              <X className="h-4 w-4" />
+            </button>
           </div>
 
           {cartList.length === 0 ? (
@@ -117,10 +131,11 @@ export default function MiniCart() {
             </div>
           ) : (
             <>
-              <div className="max-h-[260px] divide-y divide-stone-100 overflow-y-auto py-1 scrollbar-thin scrollbar-thumb-stone-200">
+              <div className="max-h-[250px] divide-y divide-stone-100 overflow-y-auto py-1 scrollbar-thin scrollbar-thumb-stone-200">
                 {cartList.map((item) => {
                   const imageSrc =
-                    item.image && (item.image.startsWith("/") || item.image.startsWith("http"))
+                    item.image &&
+                    (item.image.startsWith("/") || item.image.startsWith("http"))
                       ? item.image
                       : item.image
                         ? `/${item.image}`
@@ -129,19 +144,19 @@ export default function MiniCart() {
                   return (
                     <div
                       key={item.id}
-                      className="flex items-center justify-between gap-3 py-4"
+                      className="flex items-center justify-between gap-3 py-3"
                     >
-                      <div className="flex-1 flex flex-col justify-between gap-2.5">
-                        <h4 className="text-xs font-bold text-stone-800 line-clamp-1">
+                      <div className="flex flex-1 flex-col justify-between gap-2">
+                        <h4 className="line-clamp-1 text-xs font-bold text-stone-800">
                           {item.title}
                         </h4>
 
-                        <div className="flex items-center gap-2.5">
+                        <div className="flex items-center gap-2">
                           <div className="flex items-center gap-1.5 rounded-lg border border-stone-200 bg-white px-2 py-0.5 shadow-2xs">
                             <button
                               type="button"
                               onClick={() => increaseQuantity(item.id)}
-                              className="text-stone-500 hover:text-stone-900"
+                              className="text-stone-500 transition-colors hover:text-stone-900"
                             >
                               <Plus className="size-3" />
                             </button>
@@ -151,13 +166,13 @@ export default function MiniCart() {
                             <button
                               type="button"
                               onClick={() => decreaseQuantity(item.id)}
-                              className="text-stone-500 hover:text-red-500"
+                              className="text-stone-500 transition-colors hover:text-red-500"
                             >
                               <Minus className="size-3" />
                             </button>
                           </div>
 
-                          <span className="text-xs font-bold text-stone-700 whitespace-nowrap">
+                          <span className="whitespace-nowrap text-xs font-bold text-stone-700">
                             {formatNumber(item.price * item.quantity)} ت
                           </span>
 
@@ -165,19 +180,19 @@ export default function MiniCart() {
                             type="button"
                             onClick={() => removeFromCart(item.id)}
                             aria-label="حذف آیتم"
-                            className="p-1 text-red-400 transition-colors hover:text-red-600"
+                            className="mr-auto p-1 text-stone-400 transition-colors hover:text-red-600"
                           >
                             <Trash2 className="size-3.5" />
                           </button>
                         </div>
                       </div>
 
-                      <div className="relative size-14 shrink-0 overflow-hidden rounded-xl border border-stone-100 bg-stone-50">
+                      <div className="relative size-13 shrink-0 overflow-hidden rounded-xl border border-stone-100 bg-[#E9DEC5]/30">
                         <Image
                           src={imageSrc}
                           alt={item.title}
                           fill
-                          sizes="56px"
+                          sizes="52px"
                           className="object-cover"
                         />
                       </div>
@@ -186,27 +201,30 @@ export default function MiniCart() {
                 })}
               </div>
 
-              <div className="border-t border-stone-800 pt-3 mt-1">
+              <div className="mt-2 border-t border-stone-100 pt-3">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-medium text-stone-500">
                     مبلغ قابل پرداخت:
                   </span>
-                  <span className="text-sm font-extrabold text-stone-800">
-                    {formatNumber(total)} تومان
-                  </span>
+                  <div className="flex items-baseline gap-1 text-stone-800">
+                    <span className="text-sm font-extrabold">
+                      {formatNumber(total)}
+                    </span>
+                    <span className="text-[11px] font-medium text-stone-500">
+                      تومان
+                    </span>
+                  </div>
                 </div>
               </div>
 
-              <div className="mt-4">
+              <div className="mt-3.5">
                 <Button
                   variant="tab"
                   asChild
                   className="w-full"
                   onClick={() => setIsOpen(false)}
                 >
-                  <Link href="/cart">
-                    ثبت سفارش / مشاهده سبد
-                  </Link>
+                  <Link href="/cart">ثبت سفارش / مشاهده سبد</Link>
                 </Button>
               </div>
             </>

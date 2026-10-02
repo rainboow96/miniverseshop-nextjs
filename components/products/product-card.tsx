@@ -1,12 +1,13 @@
-// کارتا باید سرور کامپوننت باشن
 import Link from "next/link";
 import { ShoppingCart } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { ProductCardImage } from "./product-card-image";
+import {Button} from "@/components/ui/button"; 
+import { ProductCardImage } from "@/components/products/product-card-image";
 import type { Prisma } from "@prisma/client";
 
 type ProductWithImages = Prisma.ProductGetPayload<{
-  include: { images: true };
+  include: {
+    images: true;
+  };
 }>;
 
 interface CardProps {

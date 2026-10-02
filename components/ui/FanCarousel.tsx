@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState, useTransition } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 interface BreakpointConfig {
@@ -13,69 +13,81 @@ interface BreakpointConfig {
 }
 
 const BREAKPOINTS: readonly BreakpointConfig[] = [
-  { min: 0, cardWidth: 108, cardHeight: 148, gap: 118, curve: 85, maxRotate: 20 },
-  { min: 480, cardWidth: 140, cardHeight: 190, gap: 155, curve: 120, maxRotate: 22 },
-  { min: 768, cardWidth: 190, cardHeight: 260, gap: 210, curve: 190, maxRotate: 22 },
+  { min: 0, cardWidth: 110, cardHeight: 150, gap: 110, curve: 65, maxRotate: 18 },
+  { min: 480, cardWidth: 140, cardHeight: 190, gap: 145, curve: 95, maxRotate: 20 },
+  { min: 768, cardWidth: 180, cardHeight: 250, gap: 190, curve: 130, maxRotate: 22 },
 ] as const;
 
 function resolveConfig(width: number): BreakpointConfig {
-  let matchedConfig: BreakpointConfig = BREAKPOINTS[0];
-  for (const bp of BREAKPOINTS) {
-    if (width >= bp.min) {
-      matchedConfig = bp;
-    }
-  }
-  return matchedConfig;
+  if (width >= 768) return BREAKPOINTS[2];
+  if (width >= 480) return BREAKPOINTS[1];
+  return BREAKPOINTS[0];
 }
 
 export interface FanCarouselProps {
-  /** آرایه‌ای از آدرس تصاویر که درون public قرار دارند */
   readonly images?: readonly string[];
-  /** تعداد اسلایدهای رزرو در صورت نبود تصویر */
   readonly count?: number;
-  /** سرعت انیمیشن حرکت خودکار */
   readonly speed?: number;
   readonly className?: string;
 }
 
 export default function FanCarousel({
   images = [],
-  count = 8,
+  count = 6,
   speed = 0.035,
   className = "",
 }: FanCarouselProps) {
   const stageRef = useRef<HTMLDivElement | null>(null);
   const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
-  const [, startTransition] = useTransition();
+  const stageWidthRef = useRef<number>(360);
 
-  const totalItems = images.length > 0 ? images.length : count;
+  const baseItems = images.length > 0 ? images : Array.from({ length: count }, () => "");
+  
+  const displayItems = React.useMemo(() => {
+    if (baseItems.length === 0) return [];
+    let list = [...baseItems];
+    while (list.length < 8) {
+      list = [...list, ...baseItems];
+    }
+    return list;
+  }, [baseItems]);
 
-  const [config, setConfig] = useState<BreakpointConfig>(BREAKPOINTS[BREAKPOINTS.length - 1]);
-  const configRef = useRef<BreakpointConfig>(config);
-  configRef.current = config;
+  const totalItems = displayItems.length;
 
-  // هماهنگی ریسپانسیو با ResizeObserver
+  const [config, setConfig] = useState<BreakpointConfig>(BREAKPOINTS[0]);
+  const configRef = useRef<BreakpointConfig>(BREAKPOINTS[0]);
+
   useEffect(() => {
     const stage = stageRef.current;
-    if (!stage || typeof ResizeObserver === "undefined") return;
+    if (!stage) return;
+
+    const updateDimensions = () => {
+      const w = stage.clientWidth || window.innerWidth;
+      stageWidthRef.current = w;
+      const nextConfig = resolveConfig(w);
+      configRef.current = nextConfig;
+      setConfig(nextConfig);
+    };
+
+    updateDimensions();
 
     const ro = new ResizeObserver((entries) => {
       const entry = entries[0];
       if (!entry) return;
       const width = entry.contentRect.width;
-      startTransition(() => {
-        setConfig(resolveConfig(width));
-      });
+      stageWidthRef.current = width;
+      const nextConfig = resolveConfig(width);
+      configRef.current = nextConfig;
+      setConfig(nextConfig);
     });
 
     ro.observe(stage);
     return () => ro.disconnect();
   }, []);
 
-  // موتور انیمیشن و مدیریت درگ و اینرسی (Inertia Physics)
   useEffect(() => {
     const stage = stageRef.current;
-    if (!stage) return;
+    if (!stage || totalItems === 0) return;
 
     let offset = 0;
     let isDragging = false;
@@ -84,43 +96,40 @@ export default function FanCarousel({
     let dragStartOffset = 0;
     let velocity = 0;
     let lastX = 0;
-    let lastTime = 0;
+    let lastTime = performance.now();
     let resumeTimeoutId: ReturnType<typeof setTimeout> | null = null;
     let animationFrameId: number | null = null;
 
     const layout = () => {
       const { gap, curve, maxRotate } = configRef.current;
       const totalWidth = gap * totalItems;
-      const stageW = stage.clientWidth || 800;
-      const halfStageW = stageW / 2;
+      const halfStageW = (stageWidthRef.current || 360) / 2;
 
       for (let i = 0; i < totalItems; i++) {
-        let pos = (i * gap - offset) % totalWidth;
-        if (pos < -totalWidth / 2) pos += totalWidth;
-        if (pos > totalWidth / 2) pos -= totalWidth;
+        let rawPos = (i * gap - offset) % totalWidth;
+        if (rawPos < -totalWidth / 2) rawPos += totalWidth;
+        if (rawPos > totalWidth / 2) rawPos -= totalWidth;
 
-        const normalizedDist = Math.max(-1, Math.min(1, pos / halfStageW));
+        const normalizedDist = Math.max(-1, Math.min(1, rawPos / (halfStageW + 40)));
         const posY = curve * (normalizedDist * normalizedDist);
         const rotateZ = normalizedDist * maxRotate;
-        const scale = 1 - Math.abs(normalizedDist) * 0.35;
-        const opacity = 1 - Math.abs(normalizedDist) * 0.55;
+        const scale = Math.max(0.7, 1 - Math.abs(normalizedDist) * 0.28);
+        const opacity = Math.max(0.25, 1 - Math.abs(normalizedDist) * 0.55);
 
         const el = itemsRef.current[i];
         if (!el) continue;
 
-        el.style.transform = `translate3d(${pos}px, ${-posY}px, 0) rotate(${rotateZ}deg) scale(${scale})`;
+        el.style.transform = `translate3d(${rawPos}px, ${-posY}px, 0) rotate(${rotateZ}deg) scale(${scale})`;
         el.style.opacity = `${opacity}`;
-        el.style.zIndex = `${100 - Math.round(Math.abs(pos))}`;
+        el.style.zIndex = `${100 - Math.round(Math.abs(rawPos))}`;
       }
     };
 
     const tick = (timestamp: number) => {
-      if (!lastTime) lastTime = timestamp;
-      const deltaTime = timestamp - lastTime;
-      lastTime = timestamp;
+      const deltaTime = Math.min(timestamp - lastTime, 64); 
 
       const { gap } = configRef.current;
-      const effectiveSpeed = speed * (gap / 210);
+      const effectiveSpeed = speed * (gap / 180);
 
       if (!isDragging && !isPaused) {
         offset += effectiveSpeed * deltaTime;
@@ -155,16 +164,16 @@ export default function FanCarousel({
       isDragging = false;
       stage.style.cursor = "grab";
 
-      let inertia = -velocity * 1.2;
+      let inertia = -velocity * 1.1;
       const applyFriction = () => {
         if (Math.abs(inertia) < 0.05) {
           resumeTimeoutId = setTimeout(() => {
             isPaused = false;
-          }, 250);
+          }, 300);
           return;
         }
         offset += inertia;
-        inertia *= 0.93;
+        inertia *= 0.92;
         requestAnimationFrame(applyFriction);
       };
 
@@ -184,7 +193,6 @@ export default function FanCarousel({
       if (touch) handlePointerMove(touch.clientX);
     };
     const onTouchEnd = () => handlePointerUp();
-    const onResize = () => layout();
 
     stage.addEventListener("mousedown", onMouseDown);
     window.addEventListener("mousemove", onMouseMove);
@@ -193,7 +201,6 @@ export default function FanCarousel({
     stage.addEventListener("touchstart", onTouchStart, { passive: true });
     window.addEventListener("touchmove", onTouchMove, { passive: true });
     window.addEventListener("touchend", onTouchEnd);
-    window.addEventListener("resize", onResize);
 
     layout();
     animationFrameId = requestAnimationFrame(tick);
@@ -209,13 +216,12 @@ export default function FanCarousel({
       stage.removeEventListener("touchstart", onTouchStart);
       window.removeEventListener("touchmove", onTouchMove);
       window.removeEventListener("touchend", onTouchEnd);
-      window.removeEventListener("resize", onResize);
     };
   }, [totalItems, speed]);
 
   const { cardWidth, cardHeight, curve } = config;
-  const stageHeight = cardHeight + curve * 0.75 + 28;
-  const trackTop = stageHeight - cardHeight / 2 - 14;
+  const stageHeight = cardHeight + curve + 20;
+  const trackTop = stageHeight - cardHeight / 2 - 10;
 
   return (
     <div
@@ -228,43 +234,40 @@ export default function FanCarousel({
         className="absolute left-1/2 h-0 w-0 pointer-events-none"
         style={{ top: `${trackTop}px` }}
       >
-        {Array.from({ length: totalItems }).map((_, index) => {
-          const imgSrc = images[index];
-
-          return (
-            <div
-              key={index}
-              ref={(el) => {
-                itemsRef.current[index] = el;
-              }}
-              className="absolute overflow-hidden rounded-2xl bg-stone-100 shadow-xl ring-1 ring-black/5 will-change-transform"
-              style={{
-                width: `${cardWidth}px`,
-                height: `${cardHeight}px`,
-                marginLeft: `${-cardWidth / 2}px`,
-                marginTop: `${-cardHeight / 2}px`,
-              }}
-            >
-              {imgSrc ? (
-                <div className="relative h-full w-full">
-                  <Image
-                    src={imgSrc}
-                    alt={`Hero slide ${index + 1}`}
-                    fill
-                    sizes="(max-width: 480px) 108px, (max-width: 768px) 140px, 190px"
-                    priority={index < 2}
-                    draggable={false}
-                    className="object-cover"
-                  />
-                </div>
-              ) : (
-                <div className="flex h-full w-full items-center justify-center text-xs font-medium text-stone-400">
-                  تصویر {index + 1}
-                </div>
-              )}
-            </div>
-          );
-        })}
+        {displayItems.map((imgSrc, index) => (
+          <div
+            key={index}
+            ref={(el) => {
+              itemsRef.current[index] = el;
+            }}
+            className="absolute overflow-hidden rounded-2xl bg-[#E9DEC5] shadow-[0_12px_24px_-8px_rgba(0,0,0,0.25)] ring-1 ring-black/5 will-change-transform"
+            style={{
+              width: `${cardWidth}px`,
+              height: `${cardHeight}px`,
+              marginLeft: `${-cardWidth / 2}px`,
+              marginTop: `${-cardHeight / 2}px`,
+            }}
+          >
+            {imgSrc ? (
+              <div className="relative h-full w-full">
+                <Image
+                  src={imgSrc}
+                  alt={`کتابخانه مینیاتوری ${index + 1}`}
+                  fill
+                  sizes="(max-width: 480px) 120px, (max-width: 768px) 150px, 190px"
+                  priority={index < 3}
+                  quality={75}
+                  draggable={false}
+                  className="object-cover"
+                />
+              </div>
+            ) : (
+              <div className="flex h-full w-full items-center justify-center text-xs font-medium text-stone-400">
+                تصویر {index + 1}
+              </div>
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );

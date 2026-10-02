@@ -23,7 +23,7 @@ interface FaqSectionProps {
 
 export default function FaqSection({
   title = "سوالات متداول",
-  description = "پاسخ سریع به تمام پرسش‌هایی که ممکن است درباره سفارش، پرداخت و ارسال مینیاتورها داشته باشید.",
+  description = "پاسخ سریع به تمام پرسش‌هایی که ممکن است داشته باشید.",
   className = "",
 }: FaqSectionProps) {
   return (

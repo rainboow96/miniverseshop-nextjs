@@ -14,8 +14,7 @@ export const metadata: Metadata = {
   description: "لیست کامل محصولات فروشگاه مینی‌ورس با امکان فیلتر و جستجوی پیشرفته",
 };
 
- // تعدادمحصولات درهربا نمایش. 3 ردیف3تایی
-const DEFAULT_LIMIT = 9;
+const DEFAULT_LIMIT = 12;
 
 interface PageProps {
   searchParams: Promise<{
@@ -31,7 +30,8 @@ interface PageProps {
 export default async function AllProductsPage({ searchParams }: PageProps) {
   const { q, category, minPrice, maxPrice, sort, limit } = await searchParams;
 
-  const currentLimit = limit && !Number.isNaN(Number(limit)) ? Number(limit) : DEFAULT_LIMIT;
+  const currentLimit =
+    limit && !Number.isNaN(Number(limit)) ? Number(limit) : DEFAULT_LIMIT;
 
   const breadcrumbItems = [
     { label: "خانه", to: "/" },
@@ -116,11 +116,11 @@ export default async function AllProductsPage({ searchParams }: PageProps) {
   }));
 
   return (
-    <Container>
+    <Container className="px-4 py-4 md:py-6">
       <Breadcrumb items={breadcrumbItems} />
 
-      <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-4">
-        <aside className="lg:col-span-1">
+      <div className="mt-4 grid grid-cols-1 gap-6 lg:mt-6 lg:grid-cols-4 lg:gap-8">
+        <aside className="hidden lg:col-span-1 lg:block">
           <div className="sticky top-24">
             <FilterSidebar
               categories={formattedCategories}
@@ -135,13 +135,14 @@ export default async function AllProductsPage({ searchParams }: PageProps) {
             <ProductSort />
           </div>
 
-          <div className="mb-6 flex items-center justify-between border-b border-border pb-3">
+          <div className="mb-4 flex items-center justify-between border-b border-border pb-3 sm:mb-6">
             <span className="text-xs text-muted-foreground">
               {totalMatchingProducts.toLocaleString("fa-IR")} محصول موجود است
             </span>
             {products.length > 0 && (
               <span className="text-xs text-muted-foreground">
-                نمایش {products.length.toLocaleString("fa-IR")} از {totalMatchingProducts.toLocaleString("fa-IR")}
+                نمایش {products.length.toLocaleString("fa-IR")} از{" "}
+                {totalMatchingProducts.toLocaleString("fa-IR")}
               </span>
             )}
           </div>
@@ -158,18 +159,20 @@ export default async function AllProductsPage({ searchParams }: PageProps) {
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
+              <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6 xl:grid-cols-3">
                 {products.map((product, index) => (
                   <ProductCard
                     key={product.id}
                     product={product}
-                    priority={index < 3}
+                    priority={index < 4}
                   />
                 ))}
               </div>
 
               {hasMoreProducts && (
-                <LoadMoreButton currentLimit={currentLimit} step={9} />
+                <div className="mt-8 flex justify-center">
+                  <LoadMoreButton currentLimit={currentLimit} step={6} />
+                </div>
               )}
             </>
           )}
