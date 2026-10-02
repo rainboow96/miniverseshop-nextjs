@@ -7,32 +7,24 @@ import { HERO_CAROUSEL_IMAGES } from "@/app/constants/hero";
 
 export default function Hero() {
   return (
-    <section className="relative w-full overflow-hidden py-6 sm:py-12 md:py-16">
-      <Image
-        src="/images/Heroimg.webp"
-        alt="Hero Background"
-        fill
-        priority
-        quality={75}
-        sizes="100vw"
-        className="pointer-events-none object-cover object-center -z-10"
-      />
-
+    <section
+      className="relative flex min-h-[calc(100dvh-4.5rem)] w-full flex-col justify-between bg-cover bg-center py-6 md:min-h-0 md:py-16"
+      style={{ backgroundImage: "url('/images/Heroimg.webp')" }}
+    >
       <Container>
-        <div className="relative z-20 mx-auto w-full max-w-2xl px-2 text-center text-main sm:px-6">
-          <h1 className="mb-4 flex flex-col gap-2 text-2xl font-black leading-tight sm:gap-3 sm:text-3xl lg:text-4xl">
+        <div className="relative z-20 mx-auto w-full max-w-2xl px-4 pt-6 text-center text-main sm:px-6 sm:pt-0">
+          <h1 className="mb-3 flex flex-col gap-1.5 text-2xl font-bold leading-tight sm:gap-3 sm:text-3xl lg:text-4xl">
             <span>مینی ورس؛</span>
             <span>کتابخانه‌ای در کف دست شما</span>
           </h1>
 
-          <p className="mx-auto max-w-lg text-sm font-medium leading-7 text-stone-700 sm:text-lg sm:leading-8">
+          <p className="mx-auto max-w-sm text-sm font-medium leading-7 text-stone-700 sm:max-w-none sm:text-base sm:leading-8">
             ساخت دکوری‌های مینیاتوری و کتابخانه‌های خاص دست‌ساز؛ هدیه‌ای از ظرافت در ابعاد کوچک
           </p>
         </div>
       </Container>
 
-    
-      <div className="relative z-10 my-6 w-full sm:my-8 md:-mt-12 md:mb-4">
+      <div className="relative z-10 my-auto w-full py-2 md:my-0 md:-mt-16">
         <FanCarousel images={HERO_CAROUSEL_IMAGES} />
       </div>
 
@@ -52,7 +44,7 @@ export default function Hero() {
           <Link href="/products">
             <Button
               variant="secondary"
-              className="h-12 px-10 text-base font-bold shadow-md sm:h-14 sm:px-12 sm:text-lg"
+              className="h-12 px-8 text-base font-semibold shadow-md sm:h-14 sm:px-10 sm:text-lg"
             >
               مشاهده محصولات
             </Button>
